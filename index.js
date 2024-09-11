@@ -9,7 +9,7 @@ dotenv.config();
     console.log(ansis.cyan.bold(`Made by: SnoopyCodeX @https://github.com/SnoopyCodeX/autopokeback\n`));
 
     const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
-    const browser = await puppeteer.launch({ headless: 'shell', protocolTimeout: 1000 * 60 * 60 * 24 * 30 });
+    const browser = await puppeteer.launch({ headless: 'shell', protocolTimeout: 0 });
     const page = await browser.newPage();
 
     // Custom SIGINT event for windows
