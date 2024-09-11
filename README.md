@@ -1,8 +1,8 @@
 ![banner](./pictures/banner.png)
 
-## Auto Poke Back (Facebook web crawler)
+## Auto Poke Back (Facebook web scraper)
 
-A simple web crawler made using [PuppeteerJS](https://pptr.dev) and NodeJS that automates pressing the "Poke Back" button whenever a facebook friend/user pokes you.
+A simple web scraper made using [PuppeteerJS](https://pptr.dev) and NodeJS that automates pressing the "Poke Back" button whenever a facebook friend/user pokes you.
 
 ### Setup
 
