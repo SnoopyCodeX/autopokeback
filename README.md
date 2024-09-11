@@ -45,6 +45,8 @@ node index.js
 
 ### Possible Improvements
 - [ ] Login cookie (to avoid relogging in and going through the login checkpoint everytime)
+- [ ] Incorrect email/password detection
+- [ ] 2FA detection
 
 ### Disclaimer
 I will not be responsible for any damages/consequences that this may cause to your and/or other's account(s). Please use at your own risk.
