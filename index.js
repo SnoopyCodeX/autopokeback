@@ -11,7 +11,7 @@ dotenv.config();
     console.log(ansis.cyan.bold(`Made by: SnoopyCodeX @https://github.com/SnoopyCodeX/autopokeback\n`));
 
     const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
-    const browser = await puppeteer.launch({ headless: 'shell', protocolTimeout: 0 });
+    const browser = await puppeteer.launch({ headless: false, protocolTimeout: 0 });
     const page = await browser.newPage();
 
     // Custom SIGINT event for windows
@@ -54,7 +54,7 @@ dotenv.config();
 
                     return true;
                 }
-            });
+            }, {clearPromptOnDone: true});
 
             const userPassword = await password({
                 mask: '*',
@@ -66,7 +66,7 @@ dotenv.config();
 
                     return true;
                 }
-            });
+            }, {clearPromptOnDone: true});
 
             // Write to .env file
             writeFileSync(`.env`, `FB_EMAIL=${userEmailAddress}\nFB_PASS=${userPassword}\nUSER_AGENT='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 Edg/123.0.2420.81'`);
@@ -133,9 +133,10 @@ dotenv.config();
         await page.setUserAgent(process.env.USER_AGENT);
         await page.goto('https://www.facebook.com/pokes', { waitUntil: 'networkidle2' });
 
+        const pokeButtons = await page.$$(`div[aria-label="Poke"]`);
         url = page.url();
         
-        if (url.includes('pokes')) {
+        if (url.includes('pokes') && pokeButtons.length > 0) {
             console.log(ansis.italic.gray('Pokes page loaded, checking for users that poked you...\n'));
         
             while(true) {
@@ -166,7 +167,9 @@ dotenv.config();
                 await delay(2000);
             }
         } else {
-            await page.screenshot({ path: './screenshots/page.png' });
+            await page.screenshot({ path: './screenshots/pokepage.png' });
+            console.log(ansis.red.italic(`\nFailed to load pokes page, see screenshot at ./screenshots/pokepage.png`));
+            console.log(ansis.gray.italic(`Terminating...\n`));
             browser.close();
         }
     } catch (e) {
