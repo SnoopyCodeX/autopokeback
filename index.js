@@ -170,7 +170,7 @@ dotenv.config();
             browser.close();
         }
     } catch (e) {
-        if (typeof(e) === typeof(e === puppeteer.TimeoutError)) {
+        if (e instanceof puppeteer.TimeoutError) {
             console.log(ansis.red.italic(`\nTimeout exceeded, terminating gracefully...\n`));
         } else {
             console.log(ansis.red.italic(`\nAn exception occured, terminating gracefully...\nCause: ${e}\n`));
