@@ -45,8 +45,10 @@ node index.js
 
 ### Possible Improvements
 - [ ] Login cookie (to avoid relogging in and going through the login checkpoint everytime)
-- [ ] Incorrect email/password detection
-- [ ] 2FA detection
+- [x] Incorrect email/password detection
+- [x] 2-Step Verification detection
+- [x] Manual logging in when .env file is not present
+- [x] Better error handling (like timeouts, unhandled exceptions, etc.)
 
 ### Disclaimer
 I will not be responsible for any damages/consequences that this may cause to your and/or other's account(s). Please use at your own risk.
