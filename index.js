@@ -11,7 +11,7 @@ dotenv.config();
     console.log(ansis.cyan.bold(`Made by: SnoopyCodeX @https://github.com/SnoopyCodeX/autopokeback\n`));
 
     const delay = (time) => new Promise(resolve => setTimeout(resolve, time));
-    const browser = await puppeteer.launch({ headless: false, protocolTimeout: 0 });
+    const browser = await puppeteer.launch({ headless: "shell", protocolTimeout: 0 });
     const page = await browser.newPage();
 
     // Custom SIGINT event for windows
@@ -120,9 +120,11 @@ dotenv.config();
             console.log(ansis.green.italic('Login has been approved...'));
         }
 
-        // Two-Step Verification detection
+        // Two-Step Verification detection (it's a hassle to handle this so we'll just ignore this)
+        // This might also mean a captcha verification
         if (url.includes("two_step_verification")) {
             console.log(ansis.red.italic(`\nTwo-Step Verification detected, please turn off this security feature in your facebook account to use this tool!`));
+            console.log(ansis.red.italic(`\nTwo-Step Verification detected, this might also mean a captcha verification. Please the screenshot on './screenshots/2sv.png'`));
             console.log(ansis.red.italic(`Terminating...\n`));
             await page.screenshot({ path: './screenshots/2sv.png' });
             await browser.close();
@@ -136,6 +138,8 @@ dotenv.config();
         const pokeButtons = await page.$$(`div[aria-label="Poke"]`);
         url = page.url();
         
+        // Check if pokes page has been loaded and check if we
+        // can find "Poke" buttons on the page
         if (url.includes('pokes') && pokeButtons.length > 0) {
             console.log(ansis.italic.gray('Pokes page loaded, checking for users that poked you...\n'));
         
@@ -170,7 +174,7 @@ dotenv.config();
             await page.screenshot({ path: './screenshots/pokepage.png' });
             console.log(ansis.red.italic(`\nFailed to load pokes page, see screenshot at ./screenshots/pokepage.png`));
             console.log(ansis.gray.italic(`Terminating...\n`));
-            browser.close();
+            await browser.close();
         }
     } catch (e) {
         if (e instanceof puppeteer.TimeoutError) {
